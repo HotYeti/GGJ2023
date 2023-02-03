@@ -1391,7 +1391,7 @@ GameObject:
   - component: {fileID: 1905211455191617772}
   - component: {fileID: 1905211455191617773}
   m_Layer: 5
-  m_Name: StartScreen
+  m_Name: StartScreenPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

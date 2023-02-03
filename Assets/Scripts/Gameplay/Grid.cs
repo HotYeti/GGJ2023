@@ -14,17 +14,8 @@ namespace Gameplay
         private Vector2 TileSize => m_Tile.SpriteRenderer.size * (1 + m_Padding);
 
         private Tile[,] m_Tiles;
-        private void Awake()
-        {
-            
-        }
 
-        private void Start()
-        {
-            GenerateGrid();
-        }
-
-        private void GenerateGrid()
+        public void GenerateGrid()
         {
             m_Tiles = new Tile[m_Size.x, m_Size.y];
             
