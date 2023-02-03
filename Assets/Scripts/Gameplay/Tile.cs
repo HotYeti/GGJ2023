@@ -1,9 +1,10 @@
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Gameplay
 {
-    public class Tile : MonoBehaviour
+    public class Tile : MonoBehaviour, IPointerDownHandler
     {
         [ReadOnly]
         public Tile Up;
@@ -25,5 +26,24 @@ namespace Gameplay
         public SpriteRenderer SpriteRenderer { get; private set; }
 
         #endregion
+
+        private Grid m_Grid;
+
+        public void Setup(Grid grid)
+        {
+            m_Grid = grid;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            m_Grid.SelectedTile = this;
+            Debug.Log($"Selected {name}");
+        }
+
+        public void Unselect()
+        {
+            Debug.Log($"Unselected {name}");
+            
+        }
     }
 }

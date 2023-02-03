@@ -15,6 +15,19 @@ namespace Gameplay
 
         private Tile[,] m_Tiles;
 
+        public Tile SelectedTile
+        {
+            get => _selectedTile;
+
+            set
+            {
+                _selectedTile?.Unselect();
+                _selectedTile = value;
+            }
+        }
+
+        private Tile _selectedTile = null;
+
         public void GenerateGrid()
         {
             m_Tiles = new Tile[m_Size.x, m_Size.y];
@@ -25,10 +38,11 @@ namespace Gameplay
                 {
                     var newTile = GenerateTile($"Tile {x}, {y}");
 
+                    newTile.Setup(this);
+                    
                     var offset = x % 2 == 1 ? TileSize.x / 2 : 0f;
-                    
                     newTile.transform.localPosition = new Vector3(x * TileSize.y * 3 / 4 - (TileSize.y * (m_Size.x - 1) * 3f / 8f), y * TileSize.x + offset - (TileSize.x * (m_Size.y - 1) / 2f));
-                    
+                   
                     m_Tiles[x, y] = newTile;
                 }
             }
