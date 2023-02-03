@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Gameplay
@@ -21,10 +22,14 @@ namespace Gameplay
 
             set
             {
+                OnTileSelect?.Invoke(_selectedTile, value);
+                
                 _selectedTile?.Unselect();
                 _selectedTile = value;
             }
         }
+
+        public Action<Tile, Tile> OnTileSelect;
 
         private Tile _selectedTile = null;
 

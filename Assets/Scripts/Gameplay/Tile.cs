@@ -27,7 +27,14 @@ namespace Gameplay
 
         #endregion
 
+        public Unit Unit
+        {
+            get => m_Unit;
+            set => m_Unit = value; //TODO: Eski Unit varsa işlem yapılabilir veya bug vardır
+        }
+
         private Grid m_Grid;
+        private Unit m_Unit;
 
         public void Setup(Grid grid)
         {
@@ -38,12 +45,13 @@ namespace Gameplay
         {
             m_Grid.SelectedTile = this;
             Debug.Log($"Selected {name}");
+            SpriteRenderer.color = Color.gray;
         }
 
         public void Unselect()
         {
             Debug.Log($"Unselected {name}");
-            
+            SpriteRenderer.color = Color.white;
         }
     }
 }
