@@ -45,8 +45,8 @@ namespace Gameplay
 
                     newTile.Setup(this);
                     
-                    var offset = x % 2 == 1 ? TileSize.x / 2 : 0f;
-                    newTile.transform.localPosition = new Vector3(x * TileSize.y * 3 / 4 - (TileSize.y * (m_Size.x - 1) * 3f / 8f), y * TileSize.x + offset - (TileSize.x * (m_Size.y - 1) / 2f));
+                    var offset = x % 2 == 1 ? TileSize.y / 2 : 0f;
+                    newTile.transform.localPosition = new Vector3(x * TileSize.x * 3 / 4 - (TileSize.x * (m_Size.x - 1) * 3f / 8f), y * TileSize.y + offset - (TileSize.y * (m_Size.y - 1) / 2f));
                    
                     m_Tiles[x, y] = newTile;
                 }
