@@ -1,3 +1,4 @@
+using Data;
 using UnityEngine;
 using TMPro;
 public class UIManager : Helpers.Singleton<UIManager>
@@ -50,12 +51,12 @@ public class UIManager : Helpers.Singleton<UIManager>
         if (playerNumber == 1)
         {
             CurrentPlayerName.text = FirstPlayerNameUIZone.text;
-            CurrentPlayerName.color = new Color(254, 122, 142);
+            CurrentPlayerName.color = ColorData.P1Color;
         }
         else if (playerNumber == 2)
         {
             CurrentPlayerName.text = SecondPlayerNameUIZone.text;
-            CurrentPlayerName.color = new Color(137, 234, 179);
+            CurrentPlayerName.color = ColorData.P2Color;
         }
     }
 

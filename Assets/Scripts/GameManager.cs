@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gameplay;
-using Helpers;
+using Unity.VisualScripting;
 using UnityEngine;
 using Grid = Gameplay.Grid;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : Helpers.Singleton<GameManager>
 {
     [SerializeField] private Grid m_Grid;
     [SerializeField] private Root m_RootReference;
@@ -52,7 +52,7 @@ public class GameManager : Singleton<GameManager>
         {
             if (TryPlaceRoot(current))
             {
-                EndTurn();
+                EndTurn(false);
             }
         }
 
@@ -99,17 +99,15 @@ public class GameManager : Singleton<GameManager>
 
             if (!movables.Contains(target) && !attackables.Contains(target))
                 yield break;
-        
+
+            bool isAttackedRoot = false;
+            
             if (attackables.Contains(target) && target.Unit is Root currentRoot)
             {
+                isAttackedRoot = currentRoot.RootType == RootType.Root;
+                
                 var player = ActivePlayer;
 
-                if (currentRoot.RootType is RootType.Main)
-                {
-                    Debug.Log(player);
-                    _scores[player - 1]++;
-                }
-                
                 _activePlayer = 0;
                 yield return currentRoot.DestroyAllBranches(true);
                 yield return target.TriggerBomb();
@@ -120,7 +118,7 @@ public class GameManager : Singleton<GameManager>
             {
                 target.IsExploded = false;
             }
-            else
+            else if(!isAttackedRoot)
             {
                 Root newBranch = Instantiate(m_BranchReference, target.transform, false);
                 target.Unit = newBranch;
@@ -133,13 +131,13 @@ public class GameManager : Singleton<GameManager>
             }
             
             
-            EndTurn();
+            EndTurn(true);
         }
             
         
     }
 
-    public void EndTurn()
+    public void EndTurn(bool checkEndGame)
     {
         StartCoroutine(_EndTurn());
 
@@ -151,15 +149,14 @@ public class GameManager : Singleton<GameManager>
 
             UIManager.Instance.UpdateRootsCount(1, Roots[0] ? Roots[0].TotalRoots : 0);
             UIManager.Instance.UpdateRootsCount(2, Roots[1] ? Roots[1].TotalRoots : 0);
-            UIManager.Instance.UpdatePlayerScore(1, _scores[0]);
-            UIManager.Instance.UpdatePlayerScore(2, _scores[1]);
 
-            CheckEndGame();
+            if(checkEndGame)
+                yield return CheckEndGame();
         }
     }
 
 
-    private void CheckEndGame()
+    private IEnumerator CheckEndGame()
     {
         int winner = 0;
 
@@ -174,29 +171,11 @@ public class GameManager : Singleton<GameManager>
 
         if (m_Grid.OutOfMoves())
         {
-            if (_scores[0] > _scores[1])
-            {
-                EndGame(1);
-            }
-            else if (_scores[0] < _scores[1])
-            {
-                EndGame(2);
-            }
+            if(m_Grid.OutOfMoves(true))
+                yield return AddScore(0); // Tie
             else
-            {
-                if (Roots[0].TotalRoots > Roots[1].TotalRoots)
-                {
-                    EndGame(1);
-                }
-                else if (Roots[0].TotalRoots < Roots[1].TotalRoots)
-                {
-                    EndGame(2);
-                }
-                else
-                {
-                    EndGame(0); // Tie
-                }
-            }
+                yield return AddScore(Enemy);
+
         }
     }
 
@@ -212,5 +191,38 @@ public class GameManager : Singleton<GameManager>
             Debug.Log($"{id} is winner");
         }
     }
-    
+
+    public IEnumerator AddScore(int id)
+    {
+        if(id != 0)
+            _scores[id - 1]++;
+
+        if (id != 0 && _scores[id - 1] > 2)
+        {
+            EndGame(id);
+        }
+        else
+        {
+            yield return RestartRound(id);
+        }
+        
+        UIManager.Instance.UpdatePlayerScore(1, _scores[0]);
+        UIManager.Instance.UpdatePlayerScore(2, _scores[1]);
+    }
+
+    private IEnumerator RestartRound(int id)
+    {
+        Debug.Log("Restarting round");
+        if (Roots[0])
+        {
+            Debug.Log("DALL res 0");
+            yield return Roots[0].DestroyAllBranches(true, false);
+        }
+        if (Roots[1])
+        {
+            Debug.Log("DALL res 1");
+            yield return Roots[1].DestroyAllBranches(true, false);
+        }
+        ActivePlayer = id == 1 ? 2 : 1;
+    }
 }

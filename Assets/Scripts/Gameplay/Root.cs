@@ -8,13 +8,13 @@ namespace Gameplay
 {
     public enum RootType
     {
-        Main,
+        Root,
         Branch
     }
     
     public class Root : Unit
     {
-        public RootType RootType = RootType.Main;
+        public RootType RootType = RootType.Root;
         
         public List<Root> Branches { get; private set; } = new List<Root>();
 
@@ -60,7 +60,7 @@ namespace Gameplay
             m_Tile = tile;
         }
 
-        public IEnumerator DestroyAllBranches(bool includeSelf)
+        public IEnumerator DestroyAllBranches(bool includeSelf, bool countScore = true)
         {
                 int iteration = 0;
                 while (Branches.Count > 0)
@@ -80,8 +80,16 @@ namespace Gameplay
                     if (m_Tile)
                         m_Tile.Unit = null;
 
-                    Destroy(gameObject);
-                    yield return new WaitForSeconds(0.1f);
+                    if (countScore && RootType is RootType.Root)
+                    {
+                        yield return GameManager.Instance.AddScore(OwnerId == 1 ? 2 : 1);
+                    }
+                    else
+                    {
+                        Destroy(gameObject);
+                        yield return new WaitForSeconds(0.1f);
+                    }
+                    
                 }
         }
 

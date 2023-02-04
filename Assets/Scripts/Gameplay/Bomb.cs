@@ -42,7 +42,7 @@ namespace Gameplay
             print($"{Tile.name}");
             foreach (var neighbour in Tile.Neighbours)
             {
-                print($"{neighbour.name}");
+                print($"{neighbour?.name}");
                 if(!neighbour || !neighbour.Unit || neighbour.Unit is not Root neighbourRoot)
                     continue;
 
