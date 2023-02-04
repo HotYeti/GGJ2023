@@ -74,13 +74,13 @@ namespace Gameplay
 
                 if (includeSelf)
                 {
-                    Destroy(gameObject);
                     if(m_Head)
                         m_Head.Branches.Remove(this);
 
                     if (m_Tile)
                         m_Tile.Unit = null;
 
+                    Destroy(gameObject);
                     yield return new WaitForSeconds(0.1f);
                 }
         }

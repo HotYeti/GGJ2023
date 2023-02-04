@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Data;
 using Unity.Collections;
@@ -8,31 +9,33 @@ namespace Gameplay
 {
     public class Tile : MonoBehaviour, IPointerDownHandler
     {
-        [ReadOnly]
         public Tile Up;
-        [ReadOnly]
         public Tile Down;
-        [ReadOnly]
         public Tile LeftUp;
-        [ReadOnly]
         public Tile LeftDown;
-        [ReadOnly]
         public Tile RightUp;
-        [ReadOnly]
         public Tile RightDown;
 
-
+        public bool IsExploded { get; set; }
+        
+        
         #region Reference
 
         [field: SerializeField]
         public SpriteRenderer SpriteRenderer { get; private set; }
+
+
+        [SerializeField] private Bomb m_BombReference; 
 
         #endregion
 
         public Unit Unit
         {
             get => m_Unit;
-            set => m_Unit = value; //TODO: Eski Unit varsa işlem yapılabilir veya bug vardır
+            set
+            {
+                m_Unit = value;
+            } 
         }
 
         public List<Tile> Neighbours => new List<Tile>() { Up, Down, LeftDown, LeftUp, RightDown, RightUp };
@@ -44,7 +47,7 @@ namespace Gameplay
         public void Setup(Grid grid)
         {
             m_Grid = grid;
-            m_Bomb = Instantiate(m_Bomb, transform, false);
+            m_Bomb = Instantiate(m_BombReference, transform, false);
             m_Bomb.Tile = this;
         }
 
@@ -202,5 +205,13 @@ namespace Gameplay
 
             return false;
         }
+
+        public void ResetBomb() => m_Bomb.ResetTrigger();
+
+        public IEnumerator TriggerBomb()
+        { 
+            yield return m_Bomb.Trigger();
+        }
+        
     }
 }
