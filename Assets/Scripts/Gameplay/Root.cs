@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Data;
 using UnityEngine;
@@ -44,28 +45,29 @@ namespace Gameplay
             m_Tile = tile;
         }
 
-        public void DestroyAllBranches(bool includeSelf)
+        public IEnumerator DestroyAllBranches(bool includeSelf)
         {
-            int iteration = 0;
-            while (Branches.Count > 0)
-            {
-                Branches[0].DestroyAllBranches(true);
+                int iteration = 0;
+                while (Branches.Count > 0)
+                {
+                    yield return Branches[0].DestroyAllBranches(true);
 
-                iteration++;
-                if (iteration > 100000)
-                    Debug.LogError("Iteration out of range");
-            }
+                    iteration++;
+                    if (iteration > 100000)
+                        Debug.LogError("Iteration out of range");
+                }
 
-            if (includeSelf)
-            {
-                Destroy(gameObject);
-                if(m_Head)
-                    m_Head.Branches.Remove(this);
+                if (includeSelf)
+                {
+                    Destroy(gameObject);
+                    if(m_Head)
+                        m_Head.Branches.Remove(this);
 
-                if (m_Tile)
-                    m_Tile.Unit = null;
-            }
-            
+                    if (m_Tile)
+                        m_Tile.Unit = null;
+
+                    yield return new WaitForSeconds(0.1f);
+                }
         }
 
         public void AddBranch(Root branch)
