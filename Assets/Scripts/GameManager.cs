@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Gameplay;
 using Helpers;
 using UnityEngine;
@@ -44,46 +46,68 @@ public class GameManager : Singleton<GameManager>
         // İlk hamle
         if (ActivePlayer > 0 && Roots[ActivePlayer - 1] == null)
         {
-            if(!current ||current.Unit)
-                return;
-            
-            Root newRoot = Instantiate(m_RootReference, current.transform, false);
-            current.Unit = newRoot;
-            newRoot.SetTile(current);
-            
-            newRoot.SetOwner(ActivePlayer);
-
-            Roots[ActivePlayer - 1] = newRoot;
-            EndTurn();
+            if (TryPlaceRoot(current))
+            {
+                EndTurn();
+            }
         }
 
         if (previous && current && previous.Unit && previous.Unit.OwnerId == ActivePlayer)
         {
-            Dir currentDir = previous.GetNeighbourDir(current);
+            TryPlaceBranch(previous, current);
+        }
+    }
+
+    private bool TryPlaceRoot(Tile target)
+    {
+        if(!target ||target.Unit)
+            return false;
+        
+        Root newRoot = Instantiate(m_RootReference, target.transform, false);
+        target.Unit = newRoot;
+        newRoot.SetTile(target);
+            
+        newRoot.SetOwner(ActivePlayer);
+
+        Roots[ActivePlayer - 1] = newRoot;
+        return true;
+    }
+
+    private void TryPlaceBranch(Tile head, Tile target)
+    {
+        StartCoroutine(_TryPlaceBranch());
+        
+        IEnumerator _TryPlaceBranch()
+        {
+            Dir currentDir = head.GetNeighbourDir(target);
 
             if (currentDir == Dir.None)
-                return;
+                yield break;
 
-            if (!previous || previous.Unit is not Root previousRoot)
-                return;
+            if (!head || head.Unit is not Root previousRoot)
+                yield break;
 
-            var movables = previous.GetMovables();
-            var attackables = previous.GetAttackables();
+            var movables = head.GetMovables();
+            var attackables = head.GetAttackables();
             
             if (movables.Count < 1 && attackables.Count < 1)
-                return;
+                yield break;
 
-            if (!movables.Contains(current) && !attackables.Contains(current))
-                return;
-            
-            if (attackables.Contains(current) && current.Unit is Root currentRoot)
+            if (!movables.Contains(target) && !attackables.Contains(target))
+                yield break;
+        
+            if (attackables.Contains(target) && target.Unit is Root currentRoot)
             {
-                currentRoot.DestroyAllBranches(true);
+                var player = ActivePlayer;
+                
+                _activePlayer = 0;
+                yield return currentRoot.DestroyAllBranches(true);
+                _activePlayer = player;
             }
             
-            Root newBranch = Instantiate(m_BranchReference, current.transform, false);
-            current.Unit = newBranch;
-            newBranch.SetTile(current);
+            Root newBranch = Instantiate(m_BranchReference, target.transform, false);
+            target.Unit = newBranch;
+            newBranch.SetTile(target);
             
             newBranch.SetOwner(ActivePlayer);
             newBranch.Dir = currentDir;
@@ -92,6 +116,8 @@ public class GameManager : Singleton<GameManager>
             
             EndTurn();
         }
+            
+        
     }
 
     public void EndTurn()
@@ -100,9 +126,9 @@ public class GameManager : Singleton<GameManager>
 
         IEnumerator _EndTurn()
         {
+            m_Grid.SelectedTile = null;
             yield return null;
             ActivePlayer = ActivePlayer == 1 ? 2 : 1;
-            m_Grid.SelectedTile = null;
         }
     }
     

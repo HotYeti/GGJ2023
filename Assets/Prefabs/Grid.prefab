@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Tile: {fileID: 6492823597389587523, guid: fead98715a2d0481884d7d40a64916de, type: 3}
-  m_Size: {x: 12, y: 8}
+  m_Size: {x: 9, y: 6}
   m_Padding: 0.05
