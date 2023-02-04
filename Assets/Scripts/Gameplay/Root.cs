@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Data;
 using UnityEngine;
 
 namespace Gameplay
@@ -26,12 +27,30 @@ namespace Gameplay
         {
             var color = id switch
             {
-                1 => Color.green,
-                2 => Color.magenta,
+                1 => ColorData.P1Color,
+                2 => ColorData.P2Color,
                 _ => Color.gray
             };
 
             m_spriteRenderer.color = color;
+        }
+
+        public void DestroyAllBranches(bool includeSelf)
+        {
+            int iteration = 0;
+            while (Branches.Count > 0)
+            {
+                Root branch = Branches[0];
+                Branches.Remove(branch);
+                branch.DestroyAllBranches(true);
+
+                iteration++;
+                if (iteration > 100000)
+                    Debug.LogError("Iteration out of range");
+            }
+
+            if (includeSelf)
+                    Destroy(gameObject);
         }
     }
 }

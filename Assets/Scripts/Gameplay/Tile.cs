@@ -53,5 +53,31 @@ namespace Gameplay
             Debug.Log($"Unselected {name}");
             SpriteRenderer.color = Color.white;
         }
+
+        public Dir GetNeighbourDir(Tile neighbour)
+        {
+            if (neighbour is null)
+                return Dir.None;
+            
+            if (Up == neighbour)
+                return Dir.Up;
+
+            if (Down == neighbour)
+                return Dir.Down;
+
+            if (LeftUp == neighbour)
+                return Dir.LeftUp;
+
+            if (LeftDown == neighbour)
+                return Dir.LeftDown;
+            
+            if (RightUp == neighbour)
+                return Dir.RightUp;
+            
+            if (RightDown == neighbour)
+                return Dir.RightDown;
+            
+            return Dir.None;
+        }
     }
 }

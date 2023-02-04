@@ -24,7 +24,9 @@ namespace Gameplay
             {
                 OnTileSelect?.Invoke(_selectedTile, value);
                 
-                _selectedTile?.Unselect();
+                if(_selectedTile != null)
+                    _selectedTile.Unselect();
+                
                 _selectedTile = value;
             }
         }

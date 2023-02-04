@@ -1,3 +1,4 @@
+using System.Collections;
 using Gameplay;
 using Helpers;
 using JetBrains.Annotations;
@@ -8,6 +9,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private Grid m_Grid;
     [SerializeField] private Root m_RootReference;
+    [SerializeField] private Root m_BranchReference;
     public int ActivePlayer
     {
         get => _activePlayer;
@@ -19,6 +21,8 @@ public class GameManager : Singleton<GameManager>
             UIManager.Instance.AnimatePlayer(_activePlayer);
         }
     }
+
+    public int Enemy => ActivePlayer == 1 ? 2 : 1;
 
     private int _activePlayer = 0; // 0 => natural, 1 => player1, 2 => player2/bot
     
@@ -49,12 +53,64 @@ public class GameManager : Singleton<GameManager>
             Roots[ActivePlayer - 1] = newRoot;
             EndTurn();
         }
+
+        if (previous && current && previous.Unit && previous.Unit.OwnerId == ActivePlayer)
+        {
+            Dir currentDir = previous.GetNeighbourDir(current);
+
+            if (currentDir == Dir.None)
+                return;
+            
+            if (previous.Unit is not Root previousRoot)
+                return;
+
+            if (current.Unit)
+            {
+                if (current.Unit is not Root currentRoot)
+                    return;
+
+                if (currentRoot.OwnerId != Enemy)
+                    return;
+
+                if ((int)previous.Unit.Dir % 3 != (int)currentDir % 3)
+                {
+                    Debug.Log("Hedef'e bakmıyorum.");
+                    return;
+                }
+
+                if ((int)currentRoot.Dir % 3 == (int)currentDir % 3)
+                {
+                    Debug.Log("Hedef bana bakıyor.");
+                    return;
+                }
+
+                currentRoot.DestroyAllBranches(true);
+            }
+            
+            Root newBranch = Instantiate(m_BranchReference, current.transform, false);
+            current.Unit = newBranch;
+            
+            newBranch.SetOwner(ActivePlayer);
+            newBranch.Dir = currentDir;
+
+            previousRoot.Branches.Add(newBranch);
+            
+            EndTurn();
+        }
     }
 
     public void EndTurn()
     {
-        ActivePlayer = ActivePlayer == 1 ? 2 : 1;
-        m_Grid.SelectedTile = null;
+        StartCoroutine(_EndTurn());
+
+        IEnumerator _EndTurn()
+        {
+            yield return null;
+            ActivePlayer = ActivePlayer == 1 ? 2 : 1;
+            m_Grid.SelectedTile = null;
+        }
     }
+    
+    
     
 }
