@@ -51,11 +51,13 @@ public class UIManager : Helpers.Singleton<UIManager>
     {
         if (playerNumber == 1)
         {
-            CurrentPlayerName.text = "Current Player: " + FirstPlayerNameUIZone.text;
+            CurrentPlayerName.text = FirstPlayerNameUIZone.text;
+            CurrentPlayerName.color = new Color(254, 122, 142);
         }
         else if (playerNumber == 2)
         {
-            CurrentPlayerName.text = "Current Player: " + SecondPlayerNameUIZone.text;
+            CurrentPlayerName.text = SecondPlayerNameUIZone.text;
+            CurrentPlayerName.color = new Color(137, 234, 179);
         }
     }
 
