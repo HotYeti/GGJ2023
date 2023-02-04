@@ -10,6 +10,12 @@ public class UIManager : Helpers.Singleton<UIManager>
     [SerializeField] private TextMeshProUGUI FirstPlayerNameUIZone;
     [SerializeField] private TextMeshProUGUI SecondPlayerNameUIZone;
 
+    [SerializeField] private TextMeshProUGUI FirstPlayerScoreText;
+    [SerializeField] private TextMeshProUGUI SecondPlayerScoreText;
+    
+    [SerializeField] private TextMeshProUGUI FirstPlayerRootCountText;
+    [SerializeField] private TextMeshProUGUI SecondPlayerRootCountText;
+    
     [SerializeField] private TextMeshProUGUI CurrentPlayerName;
 
     [SerializeField] private GameObject MainMenuAssets;
@@ -19,6 +25,9 @@ public class UIManager : Helpers.Singleton<UIManager>
         FirstPlayerNameUIZone.text = FirstPlayerNameText.text;
         SecondPlayerNameUIZone.text = SecondPlayerNameText.text;
         MainMenuAssets.SetActive(false);
+        
+        UpdateRootsCount(1, 0);
+        UpdateRootsCount(2, 0);
     }
     public void AnimatePlayer(int playerNumber)
     {
@@ -48,5 +57,21 @@ public class UIManager : Helpers.Singleton<UIManager>
         {
             CurrentPlayerName.text = "Current Player: " + SecondPlayerNameUIZone.text;
         }
+    }
+
+    public void UpdateRootsCount(int id, int count)
+    {
+        if (id == 1)
+            FirstPlayerRootCountText.text = $"Roots: {count.ToString()}";
+        else if (id == 2)
+            SecondPlayerRootCountText.text = $"Roots: {count.ToString()}";
+    }
+
+    public void UpdatePlayerScore(int id, int score)
+    {
+        if (id == 1)
+            FirstPlayerScoreText.text = $"Score: {score.ToString()}";
+        else if (id == 2)
+            SecondPlayerScoreText.text = $"Score: {score.ToString()}";
     }
 }

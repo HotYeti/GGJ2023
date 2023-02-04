@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private Grid m_Grid;
     [SerializeField] private Root m_RootReference;
     [SerializeField] private Root m_BranchReference;
+    
     public int ActivePlayer
     {
         get => _activePlayer;
@@ -29,6 +30,8 @@ public class GameManager : Singleton<GameManager>
     private int _activePlayer = 0; // 0 => natural, 1 => player1, 2 => player2/bot
     
     public Root[] Roots = new Root[]{null, null};
+
+    private int[] _scores = new int[]{0, 0};
     
     // Play button'una basınca çalışıyor
     public void StartGame()
@@ -99,6 +102,11 @@ public class GameManager : Singleton<GameManager>
             if (attackables.Contains(target) && target.Unit is Root currentRoot)
             {
                 var player = ActivePlayer;
+
+                if (currentRoot.RootType is RootType.Main)
+                {
+                    _scores[player - 1] += 1;
+                }
                 
                 _activePlayer = 0;
                 yield return currentRoot.DestroyAllBranches(true);
@@ -129,8 +137,15 @@ public class GameManager : Singleton<GameManager>
             m_Grid.SelectedTile = null;
             yield return null;
             ActivePlayer = ActivePlayer == 1 ? 2 : 1;
+
+            UIManager.Instance.UpdateRootsCount(1, Roots[0] ? Roots[0].TotalRoots : 0);
+            UIManager.Instance.UpdateRootsCount(2, Roots[1] ? Roots[1].TotalRoots : 0);
+            UIManager.Instance.UpdatePlayerScore(1, _scores[0]);
+            UIManager.Instance.UpdatePlayerScore(1, _scores[1]);
         }
     }
+
+    
     
     
     

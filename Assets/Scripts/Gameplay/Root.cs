@@ -18,6 +18,21 @@ namespace Gameplay
         
         public List<Root> Branches { get; private set; } = new List<Root>();
 
+        public int TotalRoots
+        {
+            get
+            {
+                int roots = 1;
+                
+                foreach (var branch in Branches)
+                {
+                    roots += branch.TotalRoots;
+                }
+
+                return roots;
+            }
+        }
+        
         [SerializeField] private SpriteRenderer m_spriteRenderer;
 
         private Root m_Head;
