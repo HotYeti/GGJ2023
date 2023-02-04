@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Gameplay
@@ -128,7 +129,19 @@ namespace Gameplay
         
         public bool OutOfMoves()
         {
-            return false;
+            for (int y = 0; y < m_Size.y; y++)
+            {
+                for (int x = 0; x < m_Size.x; x++)
+                {
+                    var tile = m_Tiles[x, y];
+                    if (tile.Unit && tile.Unit.OwnerId == GameManager.Instance.ActivePlayer)
+                    {
+                        if (tile.GetMovables().Count > 0 || tile.GetAttackables().Count() > 0)
+                            return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
