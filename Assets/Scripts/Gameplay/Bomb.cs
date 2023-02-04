@@ -12,7 +12,7 @@ namespace Gameplay
         public void ResetTrigger()
         {
             _triggerCount = 0;
-            transform.localScale = Vector3.one * (0.2f * (_triggerCount + 1));
+            transform.localScale = Vector3.one * (0.33f * _triggerCount);
         }
         
         public IEnumerator Trigger()
@@ -20,7 +20,7 @@ namespace Gameplay
             Debug.Log($"{Tile.name} bomb triggered!");
             
             _triggerCount = (_triggerCount + 1) % m_ExplodeLimit;
-            transform.localScale = Vector3.one * (0.2f * _triggerCount);
+            transform.localScale = Vector3.one * (0.3f * _triggerCount);
             
             if (_triggerCount % m_ExplodeLimit == 0)
             {

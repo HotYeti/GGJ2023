@@ -66,7 +66,7 @@ namespace Gameplay
                 while (Branches.Count > 0)
                 {
                     yield return Branches[0].DestroyAllBranches(true);
-
+                    
                     iteration++;
                     if (iteration > 100000)
                         Debug.LogError("Iteration out of range");
