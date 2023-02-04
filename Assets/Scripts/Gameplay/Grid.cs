@@ -25,8 +25,11 @@ namespace Gameplay
                 var previousTile = _selectedTile;
                 _selectedTile = value;
 
-                if(previousTile != null)
+                if(previousTile)
                     previousTile.Unselect();
+
+                if(_selectedTile)
+                    _selectedTile.Select();
                 
                 OnTileSelect?.Invoke(previousTile, _selectedTile);
             }

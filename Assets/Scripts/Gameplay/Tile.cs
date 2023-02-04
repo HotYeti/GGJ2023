@@ -48,6 +48,11 @@ namespace Gameplay
         public void OnPointerDown(PointerEventData eventData)
         {
             Debug.Log($"Selected {name}");
+            m_Grid.SelectedTile = this;
+        }
+
+        public void Select()
+        {
             if (!Unit || Unit.OwnerId == GameManager.Instance.ActivePlayer)
             {
                 SpriteRenderer.color = Color.gray;
@@ -62,8 +67,6 @@ namespace Gameplay
                     attackable.SpriteRenderer.color = ColorData.AttackableTile;
                 }
             }
-
-            m_Grid.SelectedTile = this;
         }
 
         public void Unselect()

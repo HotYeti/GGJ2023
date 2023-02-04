@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc7b03a2de544469177524e8ae87b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartJourney: {fileID: 1717125655270196446, guid: 3dca98e11af2a45529d2734d93b9bbf1, type: 3}
+  m_StartJourney: {fileID: 1717125655270196446, guid: c8cc33f3c2c0d4a49858424920f3521c, type: 3}
+  m_EndingPath: {fileID: 1717125655270196446, guid: 3dca98e11af2a45529d2734d93b9bbf1, type: 3}
+  m_FirstEncounter: {fileID: 1717125655270196446, guid: e1febef18180b460b9f7fb3693a29b8e, type: 3}
+  m_SecondChances: {fileID: 1717125655270196446, guid: e58e24010cf5c4f55a102a99b7720240, type: 3}
