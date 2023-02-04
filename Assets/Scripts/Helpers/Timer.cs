@@ -1,81 +1,94 @@
 using System.Collections;
 using Helpers;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 public class Timer : Singleton<Timer>
 {
-    private bool timer1Running = false;
-    private bool timer2Running = false;
+    public TextMeshProUGUI timerText;
+    private float timer1Duration = 180f;
+    private float timer2Duration = 180f;
     private float timer1ElapsedTime = 0f;
     private float timer2ElapsedTime = 0f;
-    [SerializeField] private TextMeshProUGUI TimerObject;
-
-    private void Start()
-    {
-        StartCoroutine(StartTimers());
-    }
-
+    private bool timer1Running = false;
+    private bool timer2Running = false;
+    private Coroutine timer1Coroutine;
+    private Coroutine timer2Coroutine;
+    
     public void SetTimerPlayer(int playerID)
     {
         if (playerID == 1)
         {
             Debug.Log("Player 1 Timer Started!");
-            timer1Running = false;
+            PauseTimer2();
+            StartTimer1();
         } else if (playerID == 2)
         {
             Debug.Log("Player 2 Timer Started!");
-            timer2Running = false;
+            PauseTimer1();
+            StartTimer2();
         }
     }
-    
-    private IEnumerator StartTimers()
+
+    private IEnumerator Timer1Coroutine()
     {
-        float timer1Duration = 180f;
-        float timer2Duration = 180f;
-
-        while (true)
+        while (timer1ElapsedTime < timer1Duration)
         {
-            if (!timer1Running)
-            {
-                timer1Running = true;
-                float timer1StartTime = Time.time;
-
-                while (Time.time - timer1StartTime < timer1Duration - timer1ElapsedTime)
-                {
-                    TimerObject.text = (timer2Duration - timer2ElapsedTime).ToString();
-                    yield return null;
-
-                    if (timer2Running)
-                    {
-                        timer1ElapsedTime += Time.time - timer1StartTime;
-                        break;
-                    }
-                }
-
-                timer1Running = false;
-                timer1ElapsedTime = 0f;
-            }
-            else if (!timer2Running)
-            {
-                timer2Running = true;
-                float timer2StartTime = Time.time;
-
-                while (Time.time - timer2StartTime < timer2Duration - timer2ElapsedTime)
-                {
-                    TimerObject.text = (timer2Duration - timer2ElapsedTime).ToString();
-                    yield return null;
-
-                    if (timer1Running)
-                    {
-                        timer2ElapsedTime += Time.time - timer2StartTime;
-                        break;
-                    }
-                }
-
-                timer2Running = false;
-                timer2ElapsedTime = 0f;
-            }
+            timer1ElapsedTime += Time.deltaTime;
+            float timeRemaining = timer1Duration - timer1ElapsedTime;
+            int minutes = Mathf.FloorToInt(timeRemaining / 60f);
+            int seconds = Mathf.FloorToInt(timeRemaining % 60f);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            yield return null;
         }
+
+        timer1Running = false;
+        timer1ElapsedTime = 0f;
+        timerText.text = "00:00";
+    }
+
+    private IEnumerator Timer2Coroutine()
+    {
+        while (timer2ElapsedTime < timer2Duration)
+        {
+            timer2ElapsedTime += Time.deltaTime;
+            float timeRemaining = timer2Duration - timer2ElapsedTime;
+            int minutes = Mathf.FloorToInt(timeRemaining / 60f);
+            int seconds = Mathf.FloorToInt(timeRemaining % 60f);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            yield return null;
+        }
+
+        timer2Running = false;
+        timer2ElapsedTime = 0f;
+        timerText.text = "00:00";
+    }
+
+    public void StartTimer1()
+    {
+        timer1Running = true;
+        timer2Running = false;
+        timer1Coroutine = StartCoroutine(Timer1Coroutine());
+    }
+
+    public void StartTimer2()
+    {
+        timer1Running = false;
+        timer2Running = true;
+        timer2Coroutine = StartCoroutine(Timer2Coroutine());
+    }
+
+    public void PauseTimer1()
+    {
+        if (timer1Coroutine == null) return;
+        timer1Running = false;
+        StopCoroutine(timer1Coroutine);
+    }
+
+    public void PauseTimer2()
+    {
+        if (timer2Coroutine == null) return;
+        timer2Running = false;
+        StopCoroutine(timer2Coroutine);
     }
 }
