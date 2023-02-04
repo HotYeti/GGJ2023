@@ -61,7 +61,7 @@ namespace Gameplay
         {
             if (!Unit || Unit.OwnerId == GameManager.Instance.ActivePlayer)
             {
-                SpriteRenderer.color = Color.gray;
+                SpriteRenderer.color = ColorData.SelectedTile;
 
                 foreach (var movable in GetMovables())
                 {
@@ -133,7 +133,6 @@ namespace Gameplay
                     continue;
                 }
             }
-            
             return movables;
         }
 
@@ -182,7 +181,6 @@ namespace Gameplay
                     continue;
                 }
             }
-            
             return attackables;
         }
 
@@ -193,7 +191,7 @@ namespace Gameplay
             
             switch (thisRoot.RootType)
             {
-                case RootType.Main:
+                case RootType.Root:
                     if (thisRoot.Branches.Count < 3)
                         return true;
                     break;

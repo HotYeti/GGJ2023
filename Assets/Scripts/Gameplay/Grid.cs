@@ -127,16 +127,16 @@ namespace Gameplay
             }
         }
         
-        public bool OutOfMoves()
+        public bool OutOfMoves(bool enemy = false)
         {
             for (int y = 0; y < m_Size.y; y++)
             {
                 for (int x = 0; x < m_Size.x; x++)
                 {
                     var tile = m_Tiles[x, y];
-                    if (tile.Unit && tile.Unit.OwnerId == GameManager.Instance.ActivePlayer)
+                    if (tile.Unit && tile.Unit.OwnerId == (enemy ? GameManager.Instance.Enemy :GameManager.Instance.ActivePlayer))
                     {
-                        if (tile.GetMovables().Count > 0 || tile.GetAttackables().Count() > 0)
+                        if (tile.GetMovables().Count > 0 || tile.GetAttackables().Count > 0)
                             return false;
                     }
                 }
