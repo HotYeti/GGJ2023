@@ -34,6 +34,7 @@ namespace Gameplay
         }
         
         [SerializeField] private SpriteRenderer m_spriteRenderer;
+        [SerializeField] private LineRenderer m_LineRenderer;
 
         private Root m_Head;
         private Tile m_Tile;
@@ -52,7 +53,14 @@ namespace Gameplay
                 _ => Color.gray
             };
 
-            m_spriteRenderer.color = color;
+            if(m_spriteRenderer)
+                m_spriteRenderer.color = color;
+            
+            if (m_LineRenderer)
+            {
+                m_LineRenderer.startColor = color;
+                m_LineRenderer.endColor = color;
+            }
         }
 
         public void SetTile(Tile tile)
@@ -97,6 +105,12 @@ namespace Gameplay
         {
             Branches.Add(branch);
             branch.m_Head = this;
+
+            if (branch.m_LineRenderer)
+            {
+                branch.m_LineRenderer.SetPosition(0, branch.m_Head.transform.position);
+                branch.m_LineRenderer.SetPosition(1, branch.m_Tile.transform.position);
+            }
         }
     }
 }
