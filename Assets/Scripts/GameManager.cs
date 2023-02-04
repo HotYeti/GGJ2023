@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using DefaultNamespace;
 using Gameplay;
 using Helpers;
 using UnityEngine;

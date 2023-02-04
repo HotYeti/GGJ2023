@@ -230,6 +230,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 844897315342149224, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
+      propertyPath: m_EndingPath
+      value: 
+      objectReference: {fileID: 1717125655270196446, guid: 3dca98e11af2a45529d2734d93b9bbf1, type: 3}
+    - target: {fileID: 844897315342149224, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
+      propertyPath: m_StartJourney
+      value: 
+      objectReference: {fileID: 1717125655270196446, guid: c8cc33f3c2c0d4a49858424920f3521c, type: 3}
+    - target: {fileID: 844897315342149224, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
+      propertyPath: m_SecondChances
+      value: 
+      objectReference: {fileID: 1717125655270196446, guid: e58e24010cf5c4f55a102a99b7720240, type: 3}
+    - target: {fileID: 844897315342149224, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
+      propertyPath: m_FirstEncounter
+      value: 
+      objectReference: {fileID: 1717125655270196446, guid: e1febef18180b460b9f7fb3693a29b8e, type: 3}
     - target: {fileID: 844897315342149225, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
       propertyPath: m_RootOrder
       value: 6

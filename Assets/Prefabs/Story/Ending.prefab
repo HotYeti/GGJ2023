@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6242032529204415813}
   m_Layer: 0
-  m_Name: FirstEncounter
+  m_Name: Ending
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,8 +67,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -7}
-  m_SizeDelta: {x: 340, y: 30}
+  m_AnchoredPosition: {x: 0, y: -22.1}
+  m_SizeDelta: {x: 330, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3208872591508846453
 CanvasRenderer:
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Your path will cross with other good and bad paths
+  m_text: Your journey had its difficulties, yet it was fun and worth it
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: baf3f81eb36ee41af9ac551f401891bb, type: 2}
   m_sharedMaterial: {fileID: 5316807970915856429, guid: baf3f81eb36ee41af9ac551f401891bb, type: 2}
@@ -279,7 +279,8 @@ GameObject:
   - component: {fileID: 7210315825978699269}
   - component: {fileID: 8439964152584107196}
   - component: {fileID: 7654858430378371115}
-  - component: {fileID: 1145644264226599530}
+  - component: {fileID: 1462276076538535998}
+  - component: {fileID: 3672485339849849391}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!225 &1145644264226599530
+--- !u!225 &1462276076538535998
 CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -359,6 +360,61 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &3672485339849849391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5922867490052954270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1810a657db64247a890ab46f04c36b81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FadeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.25
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.75
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_FadeDuration: 3
 --- !u!1 &6701985704619110480
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +481,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: First Encounter
+  m_text: Learned a Lesson
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: baf3f81eb36ee41af9ac551f401891bb, type: 2}
   m_sharedMaterial: {fileID: 5316807970915856429, guid: baf3f81eb36ee41af9ac551f401891bb, type: 2}
