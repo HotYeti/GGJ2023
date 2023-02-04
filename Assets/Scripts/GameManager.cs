@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
         {
             Debug.Log($"Turn change from {_activePlayer} to {value}");
             _activePlayer = value;
+            UIManager.Instance.AnimatePlayer(_activePlayer);
         }
     }
 
