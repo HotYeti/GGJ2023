@@ -111,17 +111,26 @@ public class GameManager : Singleton<GameManager>
                 
                 _activePlayer = 0;
                 yield return currentRoot.DestroyAllBranches(true);
+                yield return target.TriggerBomb();
                 _activePlayer = player;
             }
+
+            if (target.IsExploded)
+            {
+                target.IsExploded = false;
+            }
+            else
+            {
+                Root newBranch = Instantiate(m_BranchReference, target.transform, false);
+                target.Unit = newBranch;
+                newBranch.SetTile(target);
             
-            Root newBranch = Instantiate(m_BranchReference, target.transform, false);
-            target.Unit = newBranch;
-            newBranch.SetTile(target);
+                newBranch.SetOwner(ActivePlayer);
+                newBranch.Dir = currentDir;
             
-            newBranch.SetOwner(ActivePlayer);
-            newBranch.Dir = currentDir;
+                previousRoot.AddBranch(newBranch);
+            }
             
-            previousRoot.AddBranch(newBranch);
             
             EndTurn();
         }
