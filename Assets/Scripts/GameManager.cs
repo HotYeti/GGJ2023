@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using DefaultNamespace;
 using Gameplay;
 using Helpers;
-using JetBrains.Annotations;
 using UnityEngine;
 using Grid = Gameplay.Grid;
 
@@ -63,30 +63,21 @@ public class GameManager : Singleton<GameManager>
 
             if (currentDir == Dir.None)
                 return;
-            
-            if (previous.Unit is not Root previousRoot)
+
+            if (!previous || previous.Unit is not Root previousRoot)
                 return;
 
-            if (current.Unit)
+            var movables = previous.GetMovables();
+            var attackables = previous.GetAttackables();
+            
+            if (movables.Count < 1 && attackables.Count < 1)
+                return;
+
+            if (!movables.Contains(current) && !attackables.Contains(current))
+                return;
+            
+            if (attackables.Contains(current) && current.Unit is Root currentRoot)
             {
-                if (current.Unit is not Root currentRoot)
-                    return;
-
-                if (currentRoot.OwnerId != Enemy)
-                    return;
-
-                if ((int)previous.Unit.Dir % 3 != (int)currentDir % 3)
-                {
-                    Debug.Log("Hedef'e bakmıyorum.");
-                    return;
-                }
-
-                if ((int)currentRoot.Dir % 3 == (int)currentDir % 3)
-                {
-                    Debug.Log("Hedef bana bakıyor.");
-                    return;
-                }
-
                 currentRoot.DestroyAllBranches(true);
             }
             
@@ -95,8 +86,8 @@ public class GameManager : Singleton<GameManager>
             
             newBranch.SetOwner(ActivePlayer);
             newBranch.Dir = currentDir;
-
-            previousRoot.Branches.Add(newBranch);
+            
+            previousRoot.AddBranch(newBranch);
             
             EndTurn();
         }

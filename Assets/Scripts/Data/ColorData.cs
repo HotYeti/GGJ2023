@@ -7,5 +7,7 @@ namespace Data
     {
         public static readonly Color P1Color = new Color(115f / 255f, 56f / 255f, 84f / 255f);
         public static readonly Color P2Color = new Color(191f / 255f, 177f / 255f, 136f / 255f);
+        public static readonly Color MovableTile = Color.green;
+        public static readonly Color AttackableTile = Color.red;
     }
 }

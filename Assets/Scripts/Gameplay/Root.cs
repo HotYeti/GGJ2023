@@ -14,6 +14,8 @@ namespace Gameplay
     public class Root : Unit
     {
         public RootType RootType = RootType.Main;
+        
+        private Root m_Head;
         public List<Root> Branches { get; private set; } = new List<Root>();
 
         [SerializeField] private SpriteRenderer m_spriteRenderer;
@@ -40,9 +42,7 @@ namespace Gameplay
             int iteration = 0;
             while (Branches.Count > 0)
             {
-                Root branch = Branches[0];
-                Branches.Remove(branch);
-                branch.DestroyAllBranches(true);
+                Branches[0].DestroyAllBranches(true);
 
                 iteration++;
                 if (iteration > 100000)
@@ -50,7 +50,18 @@ namespace Gameplay
             }
 
             if (includeSelf)
-                    Destroy(gameObject);
+            {
+                Destroy(gameObject);
+                if(m_Head)
+                    m_Head.Branches.Remove(this);
+            }
+            
+        }
+
+        public void AddBranch(Root branch)
+        {
+            Branches.Add(branch);
+            branch.m_Head = this;
         }
     }
 }

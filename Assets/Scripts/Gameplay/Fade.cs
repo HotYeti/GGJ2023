@@ -3,7 +3,8 @@ using UnityEngine;
 public class Fade : MonoBehaviour
 {
 
-    public float fadeDuration = 1.0f;
+    [SerializeField] private AnimationCurve m_FadeCurve;
+    [SerializeField] private float m_FadeDuration = 1.0f;
     private CanvasGroup canvasGroup;
 
     private void Start()
@@ -15,9 +16,9 @@ public class Fade : MonoBehaviour
     private IEnumerator DoFade()
     {
         float elapsedTime = 0.0f;
-        while (elapsedTime < fadeDuration)
+        while (elapsedTime < m_FadeDuration)
         {
-            canvasGroup.alpha = 1.0f - (elapsedTime / fadeDuration);
+            canvasGroup.alpha = m_FadeCurve.Evaluate(elapsedTime / m_FadeDuration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
