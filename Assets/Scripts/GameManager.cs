@@ -1,4 +1,5 @@
 using System.Collections;
+using DefaultNamespace;
 using Gameplay;
 using Helpers;
 using JetBrains.Annotations;
@@ -19,6 +20,7 @@ public class GameManager : Singleton<GameManager>
             Debug.Log($"Turn change from {_activePlayer} to {value}");
             _activePlayer = value;
             UIManager.Instance.AnimatePlayer(_activePlayer);
+            UIManager.Instance.NameChange(_activePlayer);
         }
     }
 
@@ -31,11 +33,12 @@ public class GameManager : Singleton<GameManager>
     // Play button'una basınca çalışıyor
     public void StartGame()
     {
-        MainMenuManager.Instance.StartGame();
+        UIManager.Instance.StartGame();
         m_Grid.GenerateGrid();
         m_Grid.OnTileSelect += TileSelected;
         Debug.Log("Game Started");
         ActivePlayer = 1;
+        StoryManager.Instance.StartJourneyPopup();
     }
 
     public void TileSelected(Tile previous, Tile current)
