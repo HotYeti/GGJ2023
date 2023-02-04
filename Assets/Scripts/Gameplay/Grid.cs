@@ -22,12 +22,13 @@ namespace Gameplay
 
             set
             {
-                OnTileSelect?.Invoke(_selectedTile, value);
-                
-                if(_selectedTile != null)
-                    _selectedTile.Unselect();
-                
+                var previousTile = _selectedTile;
                 _selectedTile = value;
+
+                if(previousTile != null)
+                    previousTile.Unselect();
+                
+                OnTileSelect?.Invoke(previousTile, _selectedTile);
             }
         }
 

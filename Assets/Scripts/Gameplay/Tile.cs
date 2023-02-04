@@ -47,23 +47,23 @@ namespace Gameplay
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            m_Grid.SelectedTile = this;
             Debug.Log($"Selected {name}");
-            
-            if (Unit && Unit.OwnerId != GameManager.Instance.ActivePlayer)
-                return;
-            
-            SpriteRenderer.color = Color.gray;
-
-            foreach (var movable in GetMovables())
+            if (!Unit || Unit.OwnerId == GameManager.Instance.ActivePlayer)
             {
-                movable.SpriteRenderer.color = ColorData.MovableTile;
+                SpriteRenderer.color = Color.gray;
+
+                foreach (var movable in GetMovables())
+                {
+                    movable.SpriteRenderer.color = ColorData.MovableTile;
+                }
+
+                foreach (var attackable in GetAttackables())
+                {
+                    attackable.SpriteRenderer.color = ColorData.AttackableTile;
+                }
             }
 
-            foreach (var attackable in GetAttackables())
-            {
-                attackable.SpriteRenderer.color = ColorData.AttackableTile;
-            }
+            m_Grid.SelectedTile = this;
         }
 
         public void Unselect()

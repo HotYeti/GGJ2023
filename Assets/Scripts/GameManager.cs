@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Gameplay;
 using Helpers;
 using UnityEngine;
@@ -44,54 +45,70 @@ public class GameManager : Singleton<GameManager>
         // İlk hamle
         if (ActivePlayer > 0 && Roots[ActivePlayer - 1] == null)
         {
-            if(!current ||current.Unit)
-                return;
-            
-            Root newRoot = Instantiate(m_RootReference, current.transform, false);
-            current.Unit = newRoot;
-            newRoot.SetTile(current);
-            
-            newRoot.SetOwner(ActivePlayer);
-
-            Roots[ActivePlayer - 1] = newRoot;
-            EndTurn();
+            if (TryPlaceRoot(current))
+            {
+                EndTurn();
+            }
         }
 
         if (previous && current && previous.Unit && previous.Unit.OwnerId == ActivePlayer)
         {
-            Dir currentDir = previous.GetNeighbourDir(current);
-
-            if (currentDir == Dir.None)
-                return;
-
-            if (!previous || previous.Unit is not Root previousRoot)
-                return;
-
-            var movables = previous.GetMovables();
-            var attackables = previous.GetAttackables();
-            
-            if (movables.Count < 1 && attackables.Count < 1)
-                return;
-
-            if (!movables.Contains(current) && !attackables.Contains(current))
-                return;
-            
-            if (attackables.Contains(current) && current.Unit is Root currentRoot)
+            if (TryPlaceBranch(previous, current))
             {
-                currentRoot.DestroyAllBranches(true);
+                EndTurn();
             }
-            
-            Root newBranch = Instantiate(m_BranchReference, current.transform, false);
-            current.Unit = newBranch;
-            newBranch.SetTile(current);
-            
-            newBranch.SetOwner(ActivePlayer);
-            newBranch.Dir = currentDir;
-            
-            previousRoot.AddBranch(newBranch);
-            
-            EndTurn();
         }
+    }
+
+    private bool TryPlaceRoot(Tile target)
+    {
+        if(!target ||target.Unit)
+            return false;
+        
+        Root newRoot = Instantiate(m_RootReference, target.transform, false);
+        target.Unit = newRoot;
+        newRoot.SetTile(target);
+            
+        newRoot.SetOwner(ActivePlayer);
+
+        Roots[ActivePlayer - 1] = newRoot;
+        return true;
+    }
+
+    private bool TryPlaceBranch(Tile head, Tile target)
+    {
+        Dir currentDir = head.GetNeighbourDir(target);
+
+        if (currentDir == Dir.None)
+            return false;
+
+        if (!head || head.Unit is not Root previousRoot)
+            return false;
+
+        var movables = head.GetMovables();
+        var attackables = head.GetAttackables();
+            
+        if (movables.Count < 1 && attackables.Count < 1)
+            return false;
+
+        if (!movables.Contains(target) && !attackables.Contains(target))
+            return false;
+        
+        if (attackables.Contains(target) && target.Unit is Root currentRoot)
+        {
+            currentRoot.DestroyAllBranches(true);
+        }
+            
+        Root newBranch = Instantiate(m_BranchReference, target.transform, false);
+        target.Unit = newBranch;
+        newBranch.SetTile(target);
+            
+        newBranch.SetOwner(ActivePlayer);
+        newBranch.Dir = currentDir;
+            
+        previousRoot.AddBranch(newBranch);
+
+        return true;
     }
 
     public void EndTurn()
@@ -100,9 +117,9 @@ public class GameManager : Singleton<GameManager>
 
         IEnumerator _EndTurn()
         {
+            m_Grid.SelectedTile = null;
             yield return null;
             ActivePlayer = ActivePlayer == 1 ? 2 : 1;
-            m_Grid.SelectedTile = null;
         }
     }
     
