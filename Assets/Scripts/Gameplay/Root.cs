@@ -15,11 +15,13 @@ namespace Gameplay
     {
         public RootType RootType = RootType.Main;
         
-        private Root m_Head;
         public List<Root> Branches { get; private set; } = new List<Root>();
 
         [SerializeField] private SpriteRenderer m_spriteRenderer;
 
+        private Root m_Head;
+        private Tile m_Tile;
+        
         private void Awake()
         {
             OnSetOwner += SetColor;
@@ -35,6 +37,11 @@ namespace Gameplay
             };
 
             m_spriteRenderer.color = color;
+        }
+
+        public void SetTile(Tile tile)
+        {
+            m_Tile = tile;
         }
 
         public void DestroyAllBranches(bool includeSelf)
@@ -54,6 +61,9 @@ namespace Gameplay
                 Destroy(gameObject);
                 if(m_Head)
                     m_Head.Branches.Remove(this);
+
+                if (m_Tile)
+                    m_Tile.Unit = null;
             }
             
         }

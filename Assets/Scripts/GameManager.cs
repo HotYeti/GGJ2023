@@ -49,6 +49,8 @@ public class GameManager : Singleton<GameManager>
             
             Root newRoot = Instantiate(m_RootReference, current.transform, false);
             current.Unit = newRoot;
+            newRoot.SetTile(current);
+            
             newRoot.SetOwner(ActivePlayer);
 
             Roots[ActivePlayer - 1] = newRoot;
@@ -81,6 +83,7 @@ public class GameManager : Singleton<GameManager>
             
             Root newBranch = Instantiate(m_BranchReference, current.transform, false);
             current.Unit = newBranch;
+            newBranch.SetTile(current);
             
             newBranch.SetOwner(ActivePlayer);
             newBranch.Dir = currentDir;
