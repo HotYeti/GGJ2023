@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 public class UIManager : Helpers.Singleton<UIManager>
 {
+    [SerializeField] private Camera m_Camera;
+    
     [SerializeField] private GameObject m_FirstPlayer;
     [SerializeField] private GameObject m_SecondPlayer;
     
@@ -52,11 +54,13 @@ public class UIManager : Helpers.Singleton<UIManager>
         {
             CurrentPlayerName.text = FirstPlayerNameUIZone.text;
             CurrentPlayerName.color = ColorData.P1Color;
+            m_Camera.backgroundColor = ColorData.P1Color;
         }
         else if (playerNumber == 2)
         {
             CurrentPlayerName.text = SecondPlayerNameUIZone.text;
             CurrentPlayerName.color = ColorData.P2Color;
+            m_Camera.backgroundColor = ColorData.P2Color;
         }
     }
 
