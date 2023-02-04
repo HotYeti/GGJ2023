@@ -22,6 +22,7 @@ public class GameManager : Singleton<GameManager>
             _activePlayer = value;
             UIManager.Instance.AnimatePlayer(_activePlayer);
             UIManager.Instance.NameChange(_activePlayer);
+            Timer.Instance.SetTimerPlayer(_activePlayer);
         }
     }
 
