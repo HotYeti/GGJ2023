@@ -34,14 +34,12 @@ public class UIManager : Helpers.Singleton<UIManager>
     {
         if (playerNumber == 1)
         {
-            Debug.Log("Player 1 Animation Started");
             m_SecondPlayer.gameObject.GetComponent<Animator>().enabled = false;
             m_FirstPlayer.gameObject.GetComponent<Animator>().enabled = true;
             m_FirstPlayer.gameObject.GetComponent<Animator>().Play("FirstAnimateUI");
         }
         else if (playerNumber == 2)
         {
-            Debug.Log("Player 2 Animation Started");
             m_FirstPlayer.gameObject.GetComponent<Animator>().enabled = false;
             m_SecondPlayer.gameObject.GetComponent<Animator>().enabled = true;
             m_SecondPlayer.gameObject.GetComponent<Animator>().Play("SecondAnimateUI");
