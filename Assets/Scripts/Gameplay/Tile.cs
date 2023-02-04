@@ -39,10 +39,13 @@ namespace Gameplay
 
         private Grid m_Grid;
         private Unit m_Unit;
+        private Bomb m_Bomb;
 
         public void Setup(Grid grid)
         {
             m_Grid = grid;
+            m_Bomb = Instantiate(m_Bomb, transform, false);
+            m_Bomb.Tile = this;
         }
 
         public void OnPointerDown(PointerEventData eventData)

@@ -213,6 +213,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &646977120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3352787588309907933, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
+  m_PrefabInstance: {fileID: 6567078853954518144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1035484084 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6567078853327150974, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
@@ -221,6 +232,17 @@ GameObject:
 --- !u!114 &1112413738 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 820411272391296781, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
+  m_PrefabInstance: {fileID: 6567078853954518144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1359097107 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2947758142543608383, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
   m_PrefabInstance: {fileID: 6567078853954518144}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -435,6 +457,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6567078853954518148}
     - target: {fileID: 3469734260197503555, guid: b8a048f74a74c427390b15afdaa81f8e, type: 3}
+      propertyPath: FirstPlayerScoreText
+      value: 
+      objectReference: {fileID: 1359097107}
+    - target: {fileID: 3469734260197503555, guid: b8a048f74a74c427390b15afdaa81f8e, type: 3}
       propertyPath: SecondPlayerNameText
       value: 
       objectReference: {fileID: 6567078853954518147}
@@ -442,6 +468,10 @@ PrefabInstance:
       propertyPath: FirstPlayerNameUIZone
       value: 
       objectReference: {fileID: 6567078853954518146}
+    - target: {fileID: 3469734260197503555, guid: b8a048f74a74c427390b15afdaa81f8e, type: 3}
+      propertyPath: SecondPlayerScoreText
+      value: 
+      objectReference: {fileID: 646977120}
     - target: {fileID: 3469734260197503555, guid: b8a048f74a74c427390b15afdaa81f8e, type: 3}
       propertyPath: SecondPlayerNameUIZone
       value: 
@@ -682,10 +712,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6567078852861155859, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6709755174593713045, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -126,6 +126,9 @@ namespace Gameplay
             }
         }
         
-        
+        public bool OutOfMoves()
+        {
+            return false;
+        }
     }
 }

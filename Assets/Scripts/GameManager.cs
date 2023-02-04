@@ -105,7 +105,8 @@ public class GameManager : Singleton<GameManager>
 
                 if (currentRoot.RootType is RootType.Main)
                 {
-                    _scores[player - 1] += 1;
+                    Debug.Log(player);
+                    _scores[player - 1]++;
                 }
                 
                 _activePlayer = 0;
@@ -141,12 +142,65 @@ public class GameManager : Singleton<GameManager>
             UIManager.Instance.UpdateRootsCount(1, Roots[0] ? Roots[0].TotalRoots : 0);
             UIManager.Instance.UpdateRootsCount(2, Roots[1] ? Roots[1].TotalRoots : 0);
             UIManager.Instance.UpdatePlayerScore(1, _scores[0]);
-            UIManager.Instance.UpdatePlayerScore(1, _scores[1]);
+            UIManager.Instance.UpdatePlayerScore(2, _scores[1]);
+
+            CheckEndGame();
         }
     }
 
-    
-    
-    
+
+    private void CheckEndGame()
+    {
+        int winner = 0;
+
+        for (int i = 0; i < _scores.Length; i++)
+        {
+            if (_scores[i] > 2)
+                winner = i + 1;
+        }
+        
+        if(winner != 0)
+            EndGame(winner);
+
+        if (m_Grid.OutOfMoves())
+        {
+            if (_scores[0] > _scores[1])
+            {
+                EndGame(1);
+            }
+            else if (_scores[0] < _scores[1])
+            {
+                EndGame(2);
+            }
+            else
+            {
+                if (Roots[0].TotalRoots > Roots[1].TotalRoots)
+                {
+                    EndGame(1);
+                }
+                else if (Roots[0].TotalRoots < Roots[1].TotalRoots)
+                {
+                    EndGame(2);
+                }
+                else
+                {
+                    EndGame(0); // Tie
+                }
+            }
+        }
+    }
+
+
+    private void EndGame(int id)
+    {
+        if (id == 0)
+        {
+            Debug.Log("Tie game");
+        }
+        else
+        {
+            Debug.Log($"{id} is winner");
+        }
+    }
     
 }
