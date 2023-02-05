@@ -217,6 +217,8 @@ public class GameManager : Helpers.Singleton<GameManager>
         
         UIManager.Instance.UpdatePlayerScore(1, _scores[0]);
         UIManager.Instance.UpdatePlayerScore(2, _scores[1]);
+        UIManager.Instance.UpdateRootsCount(1, Roots[0].TotalRoots);
+        UIManager.Instance.UpdateRootsCount(2, Roots[1].TotalRoots);
     }
 
     private IEnumerator RestartRound(int id)
