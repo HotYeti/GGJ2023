@@ -70,16 +70,16 @@ public class UIManager : Helpers.Singleton<UIManager>
     public void UpdateRootsCount(int id, int count)
     {
         if (id == 1)
-            FirstPlayerRootCountText.text = $"Roots: {count.ToString()}";
+            FirstPlayerRootCountText.text = count.ToString();
         else if (id == 2)
-            SecondPlayerRootCountText.text = $"Roots: {count.ToString()}";
+            SecondPlayerRootCountText.text = count.ToString();
     }
 
     public void UpdatePlayerScore(int id, int score)
     {
         if (id == 1)
-            FirstPlayerScoreText.text = $"Score: {score.ToString()}";
+            FirstPlayerScoreText.text = score.ToString();
         else if (id == 2)
-            SecondPlayerScoreText.text = $"Score: {score.ToString()}";
+            SecondPlayerScoreText.text = score.ToString();
     }
 }
