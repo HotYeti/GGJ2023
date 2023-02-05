@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Gameplay;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Grid = Gameplay.Grid;
 
 public class GameManager : Helpers.Singleton<GameManager>
@@ -184,8 +185,7 @@ public class GameManager : Helpers.Singleton<GameManager>
 
         }
     }
-
-
+    
     private void EndGame(int id)
     {
         if (id == 0)
