@@ -20,7 +20,9 @@ public class UIManager : Helpers.Singleton<UIManager>
     [SerializeField] private TextMeshProUGUI SecondPlayerRootCountText;
     
     [SerializeField] private TextMeshProUGUI CurrentPlayerName;
-    [SerializeField] private TextMeshProUGUI TimerText;
+    [SerializeField] private TextMeshProUGUI FirstTimer;
+    [SerializeField] private TextMeshProUGUI SecondTimer;
+
 
     [SerializeField] private GameObject MainMenuAssets;
     
@@ -55,14 +57,14 @@ public class UIManager : Helpers.Singleton<UIManager>
         {
             CurrentPlayerName.text = FirstPlayerNameUIZone.text;
             CurrentPlayerName.color = ColorData.P1Color;
-            TimerText.color = ColorData.P1Color;
+            FirstTimer.color = ColorData.P1Color;
             m_Camera.backgroundColor = ColorData.P1Color;
         }
         else if (playerNumber == 2)
         {
             CurrentPlayerName.text = SecondPlayerNameUIZone.text;
             CurrentPlayerName.color = ColorData.P2Color;
-            TimerText.color = ColorData.P2Color;
+            SecondTimer.color = ColorData.P2Color;
             m_Camera.backgroundColor = ColorData.P2Color;
         }
     }
