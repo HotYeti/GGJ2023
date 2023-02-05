@@ -53,7 +53,7 @@ namespace Gameplay
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log($"Selected {name}");
+            //Debug.Log($"Selected {name}");
             m_Grid.SelectedTile = this;
         }
 
@@ -77,7 +77,7 @@ namespace Gameplay
 
         public void Unselect()
         {
-            Debug.Log($"Unselected {name}");
+            //Debug.Log($"Unselected {name}");
             SpriteRenderer.color = Color.white;
 
             foreach (var neighbour in Neighbours)
@@ -167,7 +167,7 @@ namespace Gameplay
                 
                 if ((int)Unit.Dir % 3 != (int)attackDir % 3)
                 {
-                    Debug.Log("Hedef'e bakmıyorum.");
+                    //Debug.Log("Hedef'e bakmıyorum.");
                     attackables.RemoveAt(i);
                     i--;
                     continue;
@@ -175,7 +175,7 @@ namespace Gameplay
                 
                 if ((int)tileRoot.Dir % 3 == (int)attackDir % 3)
                 {
-                    Debug.Log("Hedef bana bakıyor.");
+                    //Debug.Log("Hedef bana bakıyor.");
                     attackables.RemoveAt(i);
                     i--;
                     continue;

@@ -66,6 +66,12 @@ public class GameManager : Helpers.Singleton<GameManager>
     {
         if(!target ||target.Unit)
             return false;
+
+        foreach (var neighbour in target.Neighbours)
+        {
+            if (neighbour && neighbour.Unit is Root { RootType: RootType.Root })
+                return false;
+        }
         
         Root newRoot = Instantiate(m_RootReference, target.transform, false);
         target.Unit = newRoot;
@@ -162,7 +168,7 @@ public class GameManager : Helpers.Singleton<GameManager>
 
         for (int i = 0; i < _scores.Length; i++)
         {
-            if (_scores[i] > 2)
+            if (_scores[i] > 1)
                 winner = i + 1;
         }
         
@@ -188,6 +194,7 @@ public class GameManager : Helpers.Singleton<GameManager>
         }
         else
         {
+            StoryManager.Instance.EndingPathPopup();
             Debug.Log($"{id} is winner");
         }
     }
@@ -197,7 +204,7 @@ public class GameManager : Helpers.Singleton<GameManager>
         if(id != 0)
             _scores[id - 1]++;
 
-        if (id != 0 && _scores[id - 1] > 2)
+        if (id != 0 && _scores[id - 1] > 1)
         {
             EndGame(id);
         }
@@ -215,12 +222,12 @@ public class GameManager : Helpers.Singleton<GameManager>
         Debug.Log("Restarting round");
         if (Roots[0])
         {
-            Debug.Log("DALL res 0");
+            //Debug.Log("DALL res 0");
             yield return Roots[0].DestroyAllBranches(true, false);
         }
         if (Roots[1])
         {
-            Debug.Log("DALL res 1");
+            //Debug.Log("DALL res 1");
             yield return Roots[1].DestroyAllBranches(true, false);
         }
         ActivePlayer = id == 1 ? 2 : 1;

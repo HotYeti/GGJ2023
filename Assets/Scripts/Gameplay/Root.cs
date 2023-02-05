@@ -108,8 +108,11 @@ namespace Gameplay
 
             if (branch.m_LineRenderer)
             {
-                branch.m_LineRenderer.SetPosition(0, branch.m_Head.transform.position);
-                branch.m_LineRenderer.SetPosition(1, branch.m_Tile.transform.position);
+                var headPos = branch.m_Head.transform.position;
+                var branchPos = branch.m_Tile.transform.position;
+
+                branch.m_LineRenderer.SetPosition(0, headPos);
+                branch.m_LineRenderer.SetPosition(1, branchPos + (branchPos - headPos).normalized * 0.35f);
             }
         }
     }
