@@ -10,8 +10,6 @@ public class Timer : Singleton<Timer>
     private float timerDuration = 300f;
     private float timer1ElapsedTime = 0f;
     private float timer2ElapsedTime = 0f;
-    private bool timer1Running = false;
-    private bool timer2Running = false;
     private Coroutine timer1Coroutine;
     private Coroutine timer2Coroutine;
     
@@ -42,7 +40,6 @@ public class Timer : Singleton<Timer>
             timer1ElapsedTime += Time.deltaTime;
         }
 
-        timer1Running = false;
         timer1ElapsedTime = 0f;
         timerText.text = "00:00";
 
@@ -62,7 +59,6 @@ public class Timer : Singleton<Timer>
             timer2ElapsedTime += Time.deltaTime;
         }
 
-        timer2Running = false;
         timer2ElapsedTime = 0f;
         timerText.text = "00:00";
         
@@ -72,29 +68,23 @@ public class Timer : Singleton<Timer>
 
     public void StartTimer1()
     {
-        timer1Running = true;
-        timer2Running = false;
         timer1Coroutine = StartCoroutine(Timer1Coroutine());
     }
 
     public void StartTimer2()
     {
-        timer1Running = false;
-        timer2Running = true;
         timer2Coroutine = StartCoroutine(Timer2Coroutine());
     }
 
     public void PauseTimer1()
     {
         if (timer1Coroutine == null) return;
-        timer1Running = false;
         StopCoroutine(timer1Coroutine);
     }
 
     public void PauseTimer2()
     {
         if (timer2Coroutine == null) return;
-        timer2Running = false;
         StopCoroutine(timer2Coroutine);
     }
 }
