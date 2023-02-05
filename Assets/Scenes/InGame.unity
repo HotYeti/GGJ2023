@@ -979,10 +979,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4383930050888470979, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
-      propertyPath: timerDuration
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 6567078852132673253, guid: 8b60a525af3cd4187a9e9f697ebcfd79, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
