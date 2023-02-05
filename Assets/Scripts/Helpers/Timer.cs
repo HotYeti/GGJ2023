@@ -5,7 +5,8 @@ using TMPro;
 
 public class Timer : Singleton<Timer>
 {
-    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI firstTimerText;
+    public TextMeshProUGUI secondTimerText;
     [SerializeField]
     private float timerDuration = 300f;
     private float timer1ElapsedTime = 0f;
@@ -35,13 +36,13 @@ public class Timer : Singleton<Timer>
             float timeRemaining = timerDuration - timer1ElapsedTime;
             int minutes = Mathf.FloorToInt(timeRemaining / 60f);
             int seconds = Mathf.FloorToInt(timeRemaining % 60f);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            firstTimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             yield return null;
             timer1ElapsedTime += Time.deltaTime;
         }
 
         timer1ElapsedTime = 0f;
-        timerText.text = "00:00";
+        firstTimerText.text = "00:00";
 
         StartCoroutine(StoryManager.Instance.TimesUpPopup());
         GameManager.Instance.EndGame(2);
@@ -54,13 +55,13 @@ public class Timer : Singleton<Timer>
             float timeRemaining = timerDuration - timer2ElapsedTime;
             int minutes = Mathf.FloorToInt(timeRemaining / 60f);
             int seconds = Mathf.FloorToInt(timeRemaining % 60f);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            secondTimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             yield return null;
             timer2ElapsedTime += Time.deltaTime;
         }
 
         timer2ElapsedTime = 0f;
-        timerText.text = "00:00";
+        secondTimerText.text = "00:00";
         
         StartCoroutine(StoryManager.Instance.TimesUpPopup());
         GameManager.Instance.EndGame(1);
