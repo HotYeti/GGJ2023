@@ -7,9 +7,7 @@ public class Timer : Singleton<Timer>
 {
     public TextMeshProUGUI timerText;
     [SerializeField]
-    private float timer1Duration = 300f;
-    [SerializeField]
-    private float timer2Duration = 300f;
+    private float timerDuration = 300f;
     private float timer1ElapsedTime = 0f;
     private float timer2ElapsedTime = 0f;
     private bool timer1Running = false;
@@ -34,9 +32,9 @@ public class Timer : Singleton<Timer>
 
     private IEnumerator Timer1Coroutine()
     {
-        while (timer1ElapsedTime < timer1Duration)
+        while (timer1ElapsedTime < timerDuration)
         {
-            float timeRemaining = timer1Duration - timer1ElapsedTime;
+            float timeRemaining = timerDuration - timer1ElapsedTime;
             int minutes = Mathf.FloorToInt(timeRemaining / 60f);
             int seconds = Mathf.FloorToInt(timeRemaining % 60f);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
@@ -47,13 +45,16 @@ public class Timer : Singleton<Timer>
         timer1Running = false;
         timer1ElapsedTime = 0f;
         timerText.text = "00:00";
+
+        StartCoroutine(StoryManager.Instance.TimesUpPopup());
+        GameManager.Instance.EndGame(2);
     }
 
     private IEnumerator Timer2Coroutine()
     {
-        while (timer2ElapsedTime < timer2Duration)
+        while (timer2ElapsedTime < timerDuration)
         {
-            float timeRemaining = timer2Duration - timer2ElapsedTime;
+            float timeRemaining = timerDuration - timer2ElapsedTime;
             int minutes = Mathf.FloorToInt(timeRemaining / 60f);
             int seconds = Mathf.FloorToInt(timeRemaining % 60f);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
@@ -64,6 +65,9 @@ public class Timer : Singleton<Timer>
         timer2Running = false;
         timer2ElapsedTime = 0f;
         timerText.text = "00:00";
+        
+        StartCoroutine(StoryManager.Instance.TimesUpPopup());
+        GameManager.Instance.EndGame(1);
     }
 
     public void StartTimer1()

@@ -43,7 +43,7 @@ public class GameManager : Helpers.Singleton<GameManager>
         m_Grid.OnTileSelect += TileSelected;
         Debug.Log("Game Started");
         ActivePlayer = 1;
-        StoryManager.Instance.StartJourneyPopup();
+        StartCoroutine(StoryManager.Instance.StartJourneyPopup());
     }
 
     public void TileSelected(Tile previous, Tile current)
@@ -115,6 +115,8 @@ public class GameManager : Helpers.Singleton<GameManager>
                 
                 var player = ActivePlayer;
 
+                StartCoroutine(StoryManager.Instance.FirstEncounterPopup());
+                
                 _activePlayer = 0;
                 yield return currentRoot.DestroyAllBranches(true);
                 yield return target.TriggerBomb();
@@ -186,7 +188,7 @@ public class GameManager : Helpers.Singleton<GameManager>
         }
     }
     
-    private void EndGame(int id)
+    public void EndGame(int id)
     {
         if (id == 0)
         {
@@ -194,7 +196,7 @@ public class GameManager : Helpers.Singleton<GameManager>
         }
         else
         {
-            StoryManager.Instance.EndingPathPopup();
+            StartCoroutine(StoryManager.Instance.EndingPathPopup());
             Debug.Log($"{id} is winner");
         }
     }
@@ -231,5 +233,7 @@ public class GameManager : Helpers.Singleton<GameManager>
             yield return Roots[1].DestroyAllBranches(true, false);
         }
         ActivePlayer = id == 1 ? 2 : 1;
+        
+        StartCoroutine(StoryManager.Instance.SecondChancesPopup());
     }
 }

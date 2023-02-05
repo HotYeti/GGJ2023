@@ -19,13 +19,15 @@ namespace Helpers
         private IEnumerator DoFade()
         {
             float elapsedTime = 0.0f;
+            
             while (elapsedTime < m_FadeDuration)
             {
                 canvasGroup.alpha = m_FadeCurve.Evaluate(elapsedTime / m_FadeDuration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
-            canvasGroup.alpha = 0.0f;
+            
+            canvasGroup.alpha = m_FadeCurve.Evaluate(1);
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
         }

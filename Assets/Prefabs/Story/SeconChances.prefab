@@ -414,7 +414,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_FadeDuration: 3
+  m_FadeDuration: 5
 --- !u!1 &6701985704619110480
 GameObject:
   m_ObjectHideFlags: 0
