@@ -290,6 +290,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 844897315342149224, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 8300000, guid: 6fbb638a06df643dcb248c1def9cb193, type: 3}
     - target: {fileID: 844897315342149225, guid: 39ec0c3bda75d4769b96ce2a71219bf8, type: 3}
       propertyPath: m_RootOrder
       value: 5

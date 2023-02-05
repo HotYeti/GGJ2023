@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = music;
         audioSource.loop = true;
-        audioSource.volume = 0.1f;
+        audioSource.volume = 0.04f;
         audioSource.Play();
     }
 }
